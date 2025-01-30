@@ -18,8 +18,13 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        title: const Text('Email/Pass Auth'),
+        backgroundColor: Colors.grey[800],
+        title: const Text(
+          'Email/Pass Auth',
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: Form(
         key: _formkey,
@@ -30,8 +35,11 @@ class _SignInState extends State<SignIn> {
             children: [
               !isLogin
                   ? TextFormField(
-                      key: ValueKey('username'),
-                      decoration: InputDecoration(hintText: "Enter Username"),
+                      key: const ValueKey('username'),
+                      decoration: const InputDecoration(
+                        hintText: "Enter Username",
+                        border: OutlineInputBorder(),
+                      ),
                       validator: (value) {
                         if (value.toString().length < 3) {
                           return 'Username is so small';
@@ -46,9 +54,13 @@ class _SignInState extends State<SignIn> {
                       },
                     )
                   : Container(),
+              const SizedBox(height: 20),
               TextFormField(
-                key: ValueKey('email'),
-                decoration: InputDecoration(hintText: "Enter Email"),
+                key: const ValueKey('email'),
+                decoration: const InputDecoration(
+                  hintText: "Enter Email",
+                  border: OutlineInputBorder(),
+                ),
                 validator: (value) {
                   if (!(value.toString().contains('@'))) {
                     return 'Invalid Email';
@@ -62,10 +74,15 @@ class _SignInState extends State<SignIn> {
                   });
                 },
               ),
+              const SizedBox(height: 20),
+
               TextFormField(
                 obscureText: true,
                 key: const ValueKey('password'),
-                decoration: const InputDecoration(hintText: "Enter Password"),
+                decoration: const InputDecoration(
+                  hintText: "Enter Password",
+                  border: OutlineInputBorder(),
+                ),
                 validator: (value) {
                   if (value.toString().length < 6) {
                     return 'Password is so small';
@@ -82,19 +99,27 @@ class _SignInState extends State<SignIn> {
               const SizedBox(
                 height: 10,
               ),
-              Container(
-                  width: double.infinity,
-                  height: 50,
-                  child: ElevatedButton(
-                      onPressed: () {
-                        if (_formkey.currentState!.validate()) {
-                          _formkey.currentState!.save();
-                          isLogin
-                              ? signin(email, password)
-                              : signup(email, password);
-                        }
-                      },
-                      child: isLogin ? Text('Login') : Text('Signup'))),
+              SizedBox(
+                width: double.infinity,
+                height: 50,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(),
+                      backgroundColor: Colors.grey[800]),
+                  onPressed: () {
+                    if (_formkey.currentState!.validate()) {
+                      _formkey.currentState!.save();
+                      isLogin
+                          ? signin(email, password)
+                          : signup(email, password);
+                    }
+                  },
+                  child: Text(
+                    isLogin ? 'Login' : 'Signup',
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
               const SizedBox(
                 height: 10,
               ),

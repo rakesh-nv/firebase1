@@ -23,13 +23,16 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: StreamBuilder(
-          stream: FirebaseAuth.instance.authStateChanges(), builder: (context, snapshot){
-            if(snapshot.hasData){
-              return Home();
-            }else{
-              return SignIn();
-            }
-          },),
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return const Home();
+          } else {
+            return const SignIn();
+          }
+        },
+      ),
+
     );
   }
 }

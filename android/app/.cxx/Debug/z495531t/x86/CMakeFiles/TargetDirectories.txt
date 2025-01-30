@@ -1,0 +1,2 @@
+C:/Users/User/AndroidStudioProjects/firebase1/android/app/.cxx/Debug/z495531t/x86/CMakeFiles/edit_cache.dir
+C:/Users/User/AndroidStudioProjects/firebase1/android/app/.cxx/Debug/z495531t/x86/CMakeFiles/rebuild_cache.dir
