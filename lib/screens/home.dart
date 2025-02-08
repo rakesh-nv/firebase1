@@ -17,7 +17,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Database Options'),
+        title: const Text('Home'),
         actions: [
           IconButton(
             onPressed: () {
@@ -125,10 +125,9 @@ class _HomeState extends State<Home> {
                                 ),
                               ),
                               onTap: () {
-                                delete(data['department'],data['usn']);
+                                delete(data['department'], data['usn']);
                                 print('delete');
                               },
-
                             ),
                             const SizedBox(
                               width: 20,

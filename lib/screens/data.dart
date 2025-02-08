@@ -40,33 +40,35 @@ class _DataState extends State<Data> {
       appBar: AppBar(
         title: const Text('About'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          spacing: 30,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Center(
-              child:
-                  //widget.image.isNotEmpty
-                  //     ? Image.network(
-                  //         widget.image,
-                  //         width: 150,
-                  //         height: 150,
-                  //         fit: BoxFit.cover,
-                  //       ):
-                  Icon(Icons.person, size: 100), // Fallback if no image
-            ),
-            const SizedBox(height: 20),
-            Text('USN : ${widget.usn}', style: _textStyle()),
-            Text('Name : ${widget.name}', style: _textStyle()),
-            Text('Email : ${widget.email}', style: _textStyle()),
-            Text('Father Name : ${widget.fatherName}', style: _textStyle()),
-            Text('Mother Name : ${widget.motherName}', style: _textStyle()),
-            Text('Date of Birth : ${widget.dateOfBirth}', style: _textStyle()),
-            Text('Address : ${widget.studentAddress}', style: _textStyle()),
-             Text('gender : ${widget.gender}', style: _textStyle()),
-          ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            spacing: 30,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Center(
+                child:
+                    //widget.image.isNotEmpty
+                    //     ? Image.network(
+                    //         widget.image,
+                    //         width: 150,
+                    //         height: 150,
+                    //         fit: BoxFit.cover,
+                    //       ):
+                    Icon(Icons.person, size: 100), // Fallback if no image
+              ),
+              const SizedBox(height: 20),
+              Text('USN : ${widget.usn}', style: _textStyle()),
+              Text('Name : ${widget.name}', style: _textStyle()),
+              Text('gender : ${widget.gender}', style: _textStyle()),
+              Text('Email : ${widget.email}', style: _textStyle()),
+              Text('Father Name : ${widget.fatherName}', style: _textStyle()),
+              Text('Mother Name : ${widget.motherName}', style: _textStyle()),
+              Text('Date of Birth : ${widget.dateOfBirth}', style: _textStyle()),
+              Text('Address : ${widget.studentAddress}', style: _textStyle()),
+            ],
+          ),
         ),
       ),
     );
