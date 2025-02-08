@@ -1,5 +1,6 @@
-import 'package:firebase1/functions/databaseFunctions.dart';
-import 'package:firebase1/screens/pets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase1/screens/data.dart';
+import 'package:firebase1/screens/formfilling.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +16,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Database options'),
+        title: const Text('Database Options'),
         actions: [
           IconButton(
             onPressed: () {
@@ -25,38 +26,91 @@ class _HomeState extends State<Home> {
           )
         ],
       ),
-      body: Center(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const FormFilling(),
+            ),
+          );
+        },
+        child: const Icon(Icons.add),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
-              onPressed: () {
-                create('pets','bully', 'bully', 'bull', 10);
-              },
-              child: const Text("Create"),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                update('pets', 'tom', 'animal', 'tiger');
-              },
-              child: const Text("Update"),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const PetsList(),
-                  ),
-                );
-              },
-              child: const Text("Retrieve"),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                delete("pets",'kitty');
-              },
-              child: const Text("Delete"),
+            Expanded(
+              child: StreamBuilder<QuerySnapshot>(
+                stream:
+                    FirebaseFirestore.instance.collection('mca').snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+
+                  if (snapshot.hasError) {
+                    return const Center(child: Text("Error loading data"));
+                  }
+
+                  final details = snapshot.data?.docs;
+
+                  if (details == null || details.isEmpty) {
+                    return const Center(child: Text("No data available"));
+                  }
+
+                  return ListView.builder(
+                    itemCount: details.length,
+                    itemBuilder: (context, index) {
+                      final data =
+                          details[index].data() as Map<String, dynamic>;
+
+                      return Card(
+                        child: ListTile(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Data(
+                                  name: data['name'] ?? "N/A",
+                                  usn: data['usn'] ?? "N/A",
+                                  department: data['department'] ?? "N/A",
+                                  email: data['email'] ?? "N/A",
+                                  phoneNo: data['phoneNo'] ?? "N/A",
+                                  fatherName: data['fatherName'] ?? "N/A",
+                                  motherName: data['motherName'] ?? "N/A",
+                                  dateOfBirth: data['dateOfBirth'] ?? "N/A",
+                                  studentAddress:
+                                      data['studentAddress'] ?? "N/A",
+                                  gender: data['gender'] ?? "n/A",
+                                  // image: data['image'] ?? "",
+                                ),
+                              ),
+                            );
+                          },
+                          leading: CircleAvatar(
+                            radius: 25,
+                            // backgroundImage: data['image'] != null &&
+                            //         data['image'].isNotEmpty
+                            //     ? NetworkImage(data['image'])
+                            //     : null,
+                            child:
+                                data['image'] == null || data['image'].isEmpty
+                                    ? const Icon(Icons.person)
+                                    : null,
+                          ),
+                          title: Text(data['name'] ?? "No Name"),
+                          subtitle: Text(data['usn'] ?? "No USN"),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
             ),
           ],
         ),

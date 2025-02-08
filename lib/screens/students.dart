@@ -1,14 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class PetsList extends StatefulWidget {
-  const PetsList({super.key});
+class Students extends StatefulWidget {
+  const Students({super.key});
 
   @override
-  State<PetsList> createState() => _PetsListState();
+  State<Students> createState() => _StudentsState();
 }
 
-class _PetsListState extends State<PetsList> {
+class _StudentsState extends State<Students> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,24 +18,24 @@ class _PetsListState extends State<PetsList> {
       body: Container(
         margin: const EdgeInsets.all(10),
         child: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance.collection('pets').snapshots(),
+          stream: FirebaseFirestore.instance.collection('mca').snapshots(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
             } else {
-              final petDocs = snapshot.data?.docs;
+              final details = snapshot.data?.docs;
               return ListView.builder(
                 itemBuilder: (context, index) {
                   return Card(
                     child: ListTile(
-                      title: Text(petDocs?[index]['name']),
-                      subtitle: Text(petDocs?[index]['animal']),
+                      title: Text(details?[index]['department']),
+                      subtitle: Text(details?[index]['usn']),
                     ),
                   );
                 },
-                itemCount:petDocs?.length,
+                itemCount:details?.length,
               );
             }
           },
