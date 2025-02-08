@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase1/functions/databaseFunctions.dart';
 import 'package:firebase1/screens/data.dart';
 import 'package:firebase1/screens/formfilling.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -70,41 +71,69 @@ class _HomeState extends State<Home> {
                           details[index].data() as Map<String, dynamic>;
 
                       return Card(
-                        child: ListTile(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Data(
-                                  name: data['name'] ?? "N/A",
-                                  usn: data['usn'] ?? "N/A",
-                                  department: data['department'] ?? "N/A",
-                                  email: data['email'] ?? "N/A",
-                                  phoneNo: data['phoneNo'] ?? "N/A",
-                                  fatherName: data['fatherName'] ?? "N/A",
-                                  motherName: data['motherName'] ?? "N/A",
-                                  dateOfBirth: data['dateOfBirth'] ?? "N/A",
-                                  studentAddress:
-                                      data['studentAddress'] ?? "N/A",
-                                  gender: data['gender'] ?? "n/A",
-                                  // image: data['image'] ?? "",
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: ListTile(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => Data(
+                                        name: data['name'] ?? "N/A",
+                                        usn: data['usn'] ?? "N/A",
+                                        department: data['department'] ?? "N/A",
+                                        email: data['email'] ?? "N/A",
+                                        phoneNo: data['phoneNo'] ?? "N/A",
+                                        fatherName: data['fatherName'] ?? "N/A",
+                                        motherName: data['motherName'] ?? "N/A",
+                                        dateOfBirth:
+                                            data['dateOfBirth'] ?? "N/A",
+                                        studentAddress:
+                                            data['studentAddress'] ?? "N/A",
+                                        gender: data['gender'] ?? "n/A",
+                                        // image: data['image'] ?? "",
+                                      ),
+                                    ),
+                                  );
+                                },
+                                leading: CircleAvatar(
+                                  radius: 25,
+                                  // backgroundImage: data['image'] != null &&
+                                  //         data['image'].isNotEmpty
+                                  //     ? NetworkImage(data['image'])
+                                  //     : null,
+                                  child: data['image'] == null ||
+                                          data['image'].isEmpty
+                                      ? const Icon(Icons.person)
+                                      : null,
+                                ),
+                                title: Text(data['name'] ?? "No Name"),
+                                subtitle: Text(data['usn'] ?? "No USN"),
+                              ),
+                            ),
+                            InkWell(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: Colors.red,
+                                    borderRadius: BorderRadius.circular(5)),
+                                height: 35,
+                                width: 35,
+                                child: const Icon(
+                                  Icons.delete,
+                                  color: Colors.white,
                                 ),
                               ),
-                            );
-                          },
-                          leading: CircleAvatar(
-                            radius: 25,
-                            // backgroundImage: data['image'] != null &&
-                            //         data['image'].isNotEmpty
-                            //     ? NetworkImage(data['image'])
-                            //     : null,
-                            child:
-                                data['image'] == null || data['image'].isEmpty
-                                    ? const Icon(Icons.person)
-                                    : null,
-                          ),
-                          title: Text(data['name'] ?? "No Name"),
-                          subtitle: Text(data['usn'] ?? "No USN"),
+                              onTap: () {
+                                delete(data['department'],data['usn']);
+                                print('delete');
+                              },
+
+                            ),
+                            const SizedBox(
+                              width: 20,
+                            )
+                          ],
                         ),
                       );
                     },

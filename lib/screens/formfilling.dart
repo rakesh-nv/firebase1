@@ -264,12 +264,7 @@ class _FormFillingState extends State<FormFilling> {
                 _selectedGender!,
                 // _imageFile, // Pass Image File
               );
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const Home(),
-                ),
-              );
+              Navigator.pop(context);
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(

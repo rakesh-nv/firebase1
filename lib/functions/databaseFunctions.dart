@@ -1,8 +1,6 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:image_picker/image_picker.dart';
 
 Future<void> create(
   String department,
@@ -14,7 +12,7 @@ Future<void> create(
   String motherName,
   String studentAddress,
   String dateOfBirth,
-  String selectedGender,
+  String gender,
   // XFile? imageFile, // Accept Image File
 ) async {
   // Save Data in Firestore
@@ -29,7 +27,7 @@ Future<void> create(
       'motherName': motherName,
       'studentAddress': studentAddress,
       'dateOfBirth': dateOfBirth,
-      'gender': selectedGender
+      'gender': gender,
       // 'image': imageUrl, // Store Image URL
     },
   );
